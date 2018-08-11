@@ -389,6 +389,9 @@ var ImageCarousel = function (_React$Component) {
           style = _props.style,
           _props$horizontal = _props.horizontal,
           horizontal = _props$horizontal === undefined ? true : _props$horizontal,
+          snapToInterval = _props.snapToInterval,
+          snapToAlignment = _props.snapToAlignment,
+          decelerationRate = _props.decelerationRate,
           contentContainerStyle = _props.contentContainerStyle;
       var _state = this.state,
           fullscreen = _state.fullscreen,
@@ -413,7 +416,10 @@ var ImageCarousel = function (_React$Component) {
             contentContainerStyle: contentContainerStyle,
             scrollEnabled: !animating,
             alwaysBounceHorizontal: false,
-            showsHorizontalScrollIndicator: false
+            showsHorizontalScrollIndicator: false,
+            snapToInterval: snapToInterval || 0,
+            snapToAlignment: snapToAlignment || 'start',
+            decelerationRate: decelerationRate || 0
           },
           this.getChildren().map(function (child, idx) {
             return React.createElement(

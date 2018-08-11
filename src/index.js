@@ -416,7 +416,14 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
   };
 
   render() {
-    const {style, horizontal = true, contentContainerStyle} = this.props;
+    const {
+      style,
+      horizontal = true,
+      snapToInterval,
+      snapToAlignment,
+      decelerationRate,
+      contentContainerStyle,
+    } = this.props;
     const {
       fullscreen,
       animating,
@@ -436,6 +443,9 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           scrollEnabled={!animating}
           alwaysBounceHorizontal={false}
           showsHorizontalScrollIndicator={false}
+          snapToInterval={snapToInterval || 0}
+          snapToAlignment={snapToAlignment || 'start'}
+          decelerationRate={decelerationRate || 0}
         >
           {this.getChildren().map((child, idx) => (
             <TouchableWithoutFeedback

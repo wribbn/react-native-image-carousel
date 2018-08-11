@@ -25,10 +25,7 @@
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
     "test": "run-p --silent typecheck lint",
-    "build": "rollup -c",
-    "precommit": "lint-staged",
-    "commitmsg": "commitlint -e",
-    "prepush": "nyr test"
+    "build": "rollup -c"
   },
   "lint-staged": {
     "{src,Example/app}/**/*.js": [

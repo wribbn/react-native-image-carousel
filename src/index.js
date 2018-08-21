@@ -423,6 +423,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
       snapToAlignment,
       decelerationRate,
       contentContainerStyle,
+      onPress,
     } = this.props;
     const {
       fullscreen,
@@ -450,7 +451,13 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           {this.getChildren().map((child, idx) => (
             <TouchableWithoutFeedback
               key={`slider-image-${idx}`} // eslint-disable-line react/no-array-index-key
-              onPress={() => this.open(idx)}
+              onPress={() => {
+                if (onPress) {
+                  onPress(child, idx);
+                } else {
+                  this.open(idx);
+                }
+              }}
             >
               <View
                 ref={ref => {

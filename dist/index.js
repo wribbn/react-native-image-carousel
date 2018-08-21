@@ -392,7 +392,8 @@ var ImageCarousel = function (_React$Component) {
           snapToInterval = _props.snapToInterval,
           snapToAlignment = _props.snapToAlignment,
           decelerationRate = _props.decelerationRate,
-          contentContainerStyle = _props.contentContainerStyle;
+          contentContainerStyle = _props.contentContainerStyle,
+          _onPress = _props.onPress;
       var _state = this.state,
           fullscreen = _state.fullscreen,
           animating = _state.animating,
@@ -427,7 +428,11 @@ var ImageCarousel = function (_React$Component) {
               {
                 key: 'slider-image-' + idx // eslint-disable-line react/no-array-index-key
                 , onPress: function onPress() {
-                  return _this3.open(idx);
+                  if (_onPress) {
+                    _onPress(child, idx);
+                  } else {
+                    _this3.open(idx);
+                  }
                 }
               },
               React.createElement(

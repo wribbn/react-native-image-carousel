@@ -393,7 +393,8 @@ var ImageCarousel = function (_React$Component) {
           snapToAlignment = _props.snapToAlignment,
           decelerationRate = _props.decelerationRate,
           contentContainerStyle = _props.contentContainerStyle,
-          _onPress = _props.onPress;
+          _onPress = _props.onPress,
+          onScrollEndDrag = _props.onScrollEndDrag;
       var _state = this.state,
           fullscreen = _state.fullscreen,
           animating = _state.animating,
@@ -420,7 +421,8 @@ var ImageCarousel = function (_React$Component) {
             showsHorizontalScrollIndicator: false,
             snapToInterval: snapToInterval || 0,
             snapToAlignment: snapToAlignment || 'start',
-            decelerationRate: decelerationRate || 0
+            decelerationRate: decelerationRate || 0,
+            onScrollEndDrag: onScrollEndDrag
           },
           this.getChildren().map(function (child, idx) {
             return React.createElement(

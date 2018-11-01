@@ -425,6 +425,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
       contentContainerStyle,
       onPress,
       onScrollEndDrag,
+      onMomentumScrollEnd,
     } = this.props;
     const {
       fullscreen,
@@ -449,6 +450,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           snapToAlignment={snapToAlignment || 'start'}
           decelerationRate={decelerationRate || 0}
           onScrollEndDrag={onScrollEndDrag}
+          onMomentumScrollEnd={onMomentumScrollEnd}
         >
           {this.getChildren().map((child, idx) => (
             <TouchableWithoutFeedback

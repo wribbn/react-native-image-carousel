@@ -395,7 +395,9 @@ var ImageCarousel = function (_React$Component) {
           contentContainerStyle = _props.contentContainerStyle,
           _onPress = _props.onPress,
           onScrollEndDrag = _props.onScrollEndDrag,
-          onMomentumScrollEnd = _props.onMomentumScrollEnd;
+          onMomentumScrollEnd = _props.onMomentumScrollEnd,
+          onScrollResponderTouchStart = _props.onScrollResponderTouchStart,
+          onScrollResponderTouchEnd = _props.onScrollResponderTouchEnd;
       var _state = this.state,
           fullscreen = _state.fullscreen,
           animating = _state.animating,
@@ -415,6 +417,21 @@ var ImageCarousel = function (_React$Component) {
         React.createElement(
           reactNative.ScrollView,
           {
+            ref: function ref(_ref4) {
+              if (_ref4) {
+                _this3._scrollView = _ref4;
+                _this3._scrollView.scrollResponderHandleTouchStart = function () {
+                  if (onScrollResponderTouchStart) {
+                    onScrollResponderTouchStart();
+                  }
+                };
+                _this3._scrollView.scrollResponderHandleTouchEnd = function () {
+                  if (onScrollResponderTouchEnd) {
+                    onScrollResponderTouchEnd();
+                  }
+                };
+              }
+            },
             horizontal: horizontal,
             contentContainerStyle: contentContainerStyle,
             scrollEnabled: !animating,

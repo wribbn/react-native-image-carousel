@@ -426,6 +426,8 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
       onPress,
       onScrollEndDrag,
       onMomentumScrollEnd,
+      onScrollResponderTouchStart,
+      onScrollResponderTouchEnd,
     } = this.props;
     const {
       fullscreen,
@@ -441,6 +443,21 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
     return (
       <View style={style}>
         <ScrollView
+          ref={(ref) => {
+            if (ref) {
+              this._scrollView = ref
+              this._scrollView.scrollResponderHandleTouchStart = () => {
+                if (onScrollResponderTouchStart) {
+                  onScrollResponderTouchStart()
+                }
+              }
+              this._scrollView.scrollResponderHandleTouchEnd = () => {
+                if (onScrollResponderTouchEnd) {
+                  onScrollResponderTouchEnd()
+                }
+              }
+            }
+          }}
           horizontal={horizontal}
           contentContainerStyle={contentContainerStyle}
           scrollEnabled={!animating}

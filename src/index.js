@@ -461,6 +461,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           horizontal={horizontal}
           contentContainerStyle={contentContainerStyle}
           scrollEnabled={!animating}
+          keyboardShouldPersistTaps="handled"
           alwaysBounceHorizontal={false}
           showsHorizontalScrollIndicator={false}
           snapToInterval={snapToInterval || 0}

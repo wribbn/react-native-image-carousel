@@ -96,7 +96,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
   };
 
   componentWillMount() {
-    this.fullscreenPanResponder = PanResponder.create({
+    this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => !this.state.animating,
       onStartShouldSetPanResponderCapture: () => !this.state.animating,
       onMoveShouldSetPanResponder: () => !this.state.animating,
@@ -114,18 +114,6 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
       },
       onPanResponderRelease: this.handlePanEnd,
       onPanResponderTerminate: this.handlePanEnd,
-    });
-
-    this.defaultPanResponder = PanResponder.create({
-      onStartShouldSetPanResponderCapture: () => {
-        if (this.props.onStartShouldSetPanResponderCapture) {
-          this.props.onStartShouldSetPanResponderCapture()
-        }
-        return false
-      },
-      onPanResponderTerminationRequest: () => {
-        return false
-      },
     });
   }
 
@@ -350,12 +338,12 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           {content
             ? React.cloneElement(content, {
                 ...content.props,
-                ...this.fullscreenPanResponder.panHandlers,
+                ...this.panResponder.panHandlers,
               })
             : React.cloneElement(child, {
                 ...child.props,
                 ...this.props.activeProps,
-                ...this.fullscreenPanResponder.panHandlers,
+                ...this.panResponder.panHandlers,
               })}
         </ScrollView>
       </Animated.View>
@@ -453,26 +441,23 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
     });
 
     return (
-      <View style={style} {...this.defaultPanResponder.panHandlers}>
+      <View style={style}>
         <ScrollView
-          // ref={(ref) => {
-          //   if (ref) {
-          //     this._scrollView = ref
-          //     this._scrollView.scrollResponderHandleTerminationRequest = () => {
-          //       return false
-          //     }
-          //     this._scrollView.scrollResponderHandleTouchStart = () => {
-          //       if (onScrollResponderTouchStart) {
-          //         onScrollResponderTouchStart()
-          //       }
-          //     }
-          //     this._scrollView.scrollResponderHandleTouchEnd = () => {
-          //       if (onScrollResponderTouchEnd) {
-          //         onScrollResponderTouchEnd()
-          //       }
-          //     }
-          //   }
-          // }}
+          ref={(ref) => {
+            if (ref) {
+              this._scrollView = ref
+              this._scrollView.scrollResponderHandleTouchStart = () => {
+                if (onScrollResponderTouchStart) {
+                  onScrollResponderTouchStart()
+                }
+              }
+              this._scrollView.scrollResponderHandleTouchEnd = () => {
+                if (onScrollResponderTouchEnd) {
+                  onScrollResponderTouchEnd()
+                }
+              }
+            }
+          }}
           horizontal={horizontal}
           contentContainerStyle={contentContainerStyle}
           scrollEnabled={!animating}
@@ -495,14 +480,12 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
                   this.open(idx);
                 }
               }}
-              {...this.defaultPanResponder.panHandlers}
             >
               <View
                 ref={ref => {
                   this.captureCarouselItem(ref, idx);
                 }}
                 style={getOpacity(idx)}
-                {...this.defaultPanResponder.panHandlers}
               >
                 {child}
               </View>

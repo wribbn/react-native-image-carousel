@@ -117,7 +117,16 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
     });
 
     this.defaultPanResponder = PanResponder.create({
-      onPanResponderTerminationRequest: () => false,
+      onStartShouldSetPanResponderCapture: () => {
+        if (this.props.onStartShouldSetPanResponderCapture) {
+          this.props.onStartShouldSetPanResponderCapture()
+        }
+        return true
+      },
+      // onPanResponderTerminationRequest: () => {
+      //   alert('req')
+      //   return false
+      // },
     });
   }
 
@@ -447,24 +456,24 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
     return (
       <View style={style} {...this.defaultPanResponder.panHandlers}>
         <ScrollView
-          ref={(ref) => {
-            if (ref) {
-              this._scrollView = ref
-              this._scrollView.scrollResponderHandleTerminationRequest = () => {
-                return false
-              }
-              this._scrollView.scrollResponderHandleTouchStart = () => {
-                if (onScrollResponderTouchStart) {
-                  onScrollResponderTouchStart()
-                }
-              }
-              this._scrollView.scrollResponderHandleTouchEnd = () => {
-                if (onScrollResponderTouchEnd) {
-                  onScrollResponderTouchEnd()
-                }
-              }
-            }
-          }}
+          // ref={(ref) => {
+          //   if (ref) {
+          //     this._scrollView = ref
+          //     this._scrollView.scrollResponderHandleTerminationRequest = () => {
+          //       return false
+          //     }
+          //     this._scrollView.scrollResponderHandleTouchStart = () => {
+          //       if (onScrollResponderTouchStart) {
+          //         onScrollResponderTouchStart()
+          //       }
+          //     }
+          //     this._scrollView.scrollResponderHandleTouchEnd = () => {
+          //       if (onScrollResponderTouchEnd) {
+          //         onScrollResponderTouchEnd()
+          //       }
+          //     }
+          //   }
+          // }}
           horizontal={horizontal}
           contentContainerStyle={contentContainerStyle}
           scrollEnabled={!animating}

@@ -121,7 +121,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
         if (this.props.onStartShouldSetPanResponderCapture) {
           this.props.onStartShouldSetPanResponderCapture()
         }
-        return true
+        return false
       },
       // onPanResponderTerminationRequest: () => {
       //   alert('req')

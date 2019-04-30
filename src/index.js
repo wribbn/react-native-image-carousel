@@ -96,7 +96,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
   };
 
   componentWillMount() {
-    this.panResponder = PanResponder.create({
+    this.fullscreenPanResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => !this.state.animating,
       onStartShouldSetPanResponderCapture: () => !this.state.animating,
       onMoveShouldSetPanResponder: () => !this.state.animating,
@@ -114,6 +114,10 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
       },
       onPanResponderRelease: this.handlePanEnd,
       onPanResponderTerminate: this.handlePanEnd,
+    });
+
+    this.defaultPanResponder = PanResponder.create({
+      onPanResponderTerminationRequest: () => false,
     });
   }
 
@@ -338,12 +342,12 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           {content
             ? React.cloneElement(content, {
                 ...content.props,
-                ...this.panResponder.panHandlers,
+                ...this.fullscreenPanResponder.panHandlers,
               })
             : React.cloneElement(child, {
                 ...child.props,
                 ...this.props.activeProps,
-                ...this.panResponder.panHandlers,
+                ...this.fullscreenPanResponder.panHandlers,
               })}
         </ScrollView>
       </Animated.View>
@@ -441,7 +445,7 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
     });
 
     return (
-      <View style={style}>
+      <View style={style} {...this.defaultPanResponder.panHandlers}>
         <ScrollView
           ref={(ref) => {
             if (ref) {
@@ -480,12 +484,14 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
                   this.open(idx);
                 }
               }}
+              {...this.defaultPanResponder.panHandlers}
             >
               <View
                 ref={ref => {
                   this.captureCarouselItem(ref, idx);
                 }}
                 style={getOpacity(idx)}
+                {...this.defaultPanResponder.panHandlers}
               >
                 {child}
               </View>

@@ -450,6 +450,9 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
           ref={(ref) => {
             if (ref) {
               this._scrollView = ref
+              this._scrollView.scrollResponderHandleTerminationRequest = () => {
+                return false
+              }
               this._scrollView.scrollResponderHandleTouchStart = () => {
                 if (onScrollResponderTouchStart) {
                   onScrollResponderTouchStart()

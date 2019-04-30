@@ -123,10 +123,9 @@ class ImageCarousel extends React.Component<PropsType, StateType> {
         }
         return false
       },
-      // onPanResponderTerminationRequest: () => {
-      //   alert('req')
-      //   return false
-      // },
+      onPanResponderTerminationRequest: () => {
+        return false
+      },
     });
   }
 
